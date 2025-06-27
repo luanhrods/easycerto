@@ -96,7 +96,7 @@ export default function HomePage() {
             <button onClick={() => scrollToSection("contato")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline cursor-pointer">CONTATO</button>
           </nav>
           <div className="flex items-center gap-4">
-            <Link href={`https://wa.me/${links.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="bg-transparent p-2 sm:p-3 rounded-full hover:bg-green-600 transition-colors duration-300 cursor-pointer">
+            <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="bg-transparent p-2 sm:p-3 rounded-full hover:bg-green-600 transition-colors duration-300 cursor-pointer">
               <Image src="/images/whatsapp-icon.png" alt="WhatsApp" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
             </Link>
             <button className="lg:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
@@ -125,7 +125,7 @@ export default function HomePage() {
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">SUA VIAGEM MAIS FÁCIL</h1>
             <p className="text-lg sm:text-xl lg:text-2xl mb-6 sm:mb-8 lg:mb-10">Economize na passagem, e curta seu sonho!</p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              <Link href={`https://wa.me/${links.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">Comprar passagem</Link>
+              <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">Comprar passagem</Link>
               <Link href="/milhas" className="text-white hover:text-blue-200 transition-colors duration-300 font-medium self-center text-sm sm:text-base hover-underline text-center sm:text-left">Comprar milhas</Link>
             </div>
           </div>
@@ -169,7 +169,7 @@ export default function HomePage() {
             <div className="w-full lg:w-1/2 order-1 lg:order-2 text-center lg:text-left">
               <h2 className="text-2xl sm:text-3xl lg:text-[42px] font-bold text-[#179FCF] leading-tight mb-4 lg:mb-5">Qual seu destino?</h2>
               <p className="text-black text-sm sm:text-base lg:text-[18px] mb-4 lg:mb-3 leading-relaxed">Seja qual for, nós temos a sua passagem aqui! Seu destino tem uma passagem certa, e você pode economizar até <span className="font-bold text-[#179FCF]">30%</span> na sua passagem com a Easy Destinos como Paris, Inglaterra e Toronto podem ser mais reais!</p>
-              <Link href={`https://wa.me/${links.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="text-[#179FCF] hover:text-[#1489b8] inline-flex items-center gap-2 font-semibold text-sm sm:text-base lg:text-[18px] hover-underline flex-link justify-center lg:justify-start">
+              <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="text-[#179FCF] hover:text-[#1489b8] inline-flex items-center gap-2 font-semibold text-sm sm:text-base lg:text-[18px] hover-underline flex-link justify-center lg:justify-start">
                 Compre sua passagem <Image src="/images/vetorseta.png" alt="Arrow" width={12} height={12} />
               </Link>
             </div>
@@ -247,7 +247,7 @@ export default function HomePage() {
             <div className="w-full lg:w-1/2 order-1 lg:order-2 text-center lg:text-left">
               <h2 className="text-2xl sm:text-3xl lg:text-[42px] font-bold text-[#179FCF] leading-tight mb-4 lg:mb-5">Destinos populares</h2>
               <p className="text-black text-sm sm:text-base lg:text-[18px] mb-4 lg:mb-3 leading-relaxed">Passagem <span className="font-bold">ida e volta</span> por <span className="font-bold">R$2.350</span> para <span className="font-bold">Toronto, Canadá</span>. Mais de 30 viajantes foram a este destino só esse mês! Confira nossos preços promocionais e embarque você também nessa viagem!</p>
-              <Link href={`https://wa.me/${links.telOne}?text=Olá! Quero saber mais sobre as promoções de vocês.`} className="text-[#179FCF] hover:text-[#1489b8] inline-flex items-center gap-2 font-semibold text-sm sm:text-base lg:text-[18px] hover-underline flex-link justify-center lg:justify-start">
+              <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero saber mais sobre as promoções de vocês.`} className="text-[#179FCF] hover:text-[#1489b8] inline-flex items-center gap-2 font-semibold text-sm sm:text-base lg:text-[18px] hover-underline flex-link justify-center lg:justify-start">
                 Reserve agora! <Image src="/images/vetorseta.png" alt="Arrow" width={12} height={12} />
               </Link>
             </div>
