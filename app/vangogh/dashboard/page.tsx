@@ -39,12 +39,6 @@ export default function AdminDashboard() {
   const clients = useQuery(api.clients.list)
   const airlines = useQuery(api.company.list)
 
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("adminLoggedIn")
-    if (isLoggedIn !== "true") {
-      router.push("/vangogh")
-    }
-  }, [router])
 
   const handleLogout = () => {
     localStorage.removeItem("adminLoggedIn")
