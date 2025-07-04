@@ -124,7 +124,7 @@ export default function HomePage() {
             {siteConfig === undefined && <div className="h-[230px] w-full bg-gray-200 animate-pulse rounded-2xl"></div>}
             {siteConfig?.banner1Url && (
               <>
-                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className=" text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                   <Image
                     src={siteConfig.banner1Url}
                     alt="Banner promocional"
@@ -133,7 +133,7 @@ export default function HomePage() {
                     className="hidden sm:block rounded-2xl object-cover w-full"
                   />
                 </Link>
-                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                 <Image
                   src={siteConfig.banner1Url} 
                   alt="Banner promocional mobile"
@@ -251,7 +251,7 @@ export default function HomePage() {
             {siteConfig === undefined && <div className="h-[230px] w-full bg-gray-200 animate-pulse rounded-2xl"></div>}
             {siteConfig?.banner2Url && (
               <>
-                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                 <Image
                   src={siteConfig.banner2Url}
                   alt="Banner promocional"
@@ -260,7 +260,7 @@ export default function HomePage() {
                   className="hidden sm:block rounded-2xl object-cover w-full"
                 />
                 </Link>
-                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                 <Image
                   src={siteConfig.banner2Url}
                   alt="Banner promocional mobile"
