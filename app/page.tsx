@@ -4,7 +4,7 @@
 import { api } from "@/convex/_generated/api"
 import { type SiteSettings } from "@/lib/data-store"
 import { useQuery } from "convex/react"
-import { CreditCard, Headphones, Menu, MessageCircle, Users, X } from "lucide-react"
+import { CreditCard, Headphones, MessageCircle, Users } from "lucide-react"
 import { Montserrat } from "next/font/google"
 import Image from "next/image"
 import Link from "next/link"
@@ -47,9 +47,6 @@ export default function HomePage() {
   const links = useQuery(api.landingLinks.getUnique)
   // ✅ ADICIONADO: Query para buscar as configurações do site, incluindo banners
   const siteConfig = useQuery(api.siteConfig.get)
-
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  // ✅ ALTERADO: Removido 'banners' do estado local, pois agora é dinâmico
   const [settings, setSettings] = useState<Omit<SiteSettings, "banners">>({
     socialLinks: { facebook: "#", instagram: "#", linkedin: "#" },
     contact: { phone1: "+55 11 111-111", phone2: "+55 11 999-999", email: "easyviagens@gmail.com", whatsappLink: "#" },
@@ -68,7 +65,6 @@ export default function HomePage() {
     if (element) {
       element.scrollIntoView({ behavior: "smooth" })
     }
-    setMobileMenuOpen(false)
   }
 
   return (
@@ -97,20 +93,9 @@ export default function HomePage() {
           </nav>
           <div className="flex items-center gap-4">
             <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="bg-transparent p-2 sm:p-3 rounded-full hover:bg-green-600 transition-colors duration-300 cursor-pointer">
-              <Image src="/images/whatsapp-icon.png" alt="WhatsApp" width={32} height={32} className="w-6 h-6 sm:w-8 sm:h-8 object-contain" />
+              <Image src="/images/whatsapp-icon.png" alt="WhatsApp" width={64} height={64} className="w-12 h-12 sm:w-12 sm:h-12  object-contain" />
             </Link>
-            <button className="lg:hidden p-2" onClick={() => setMobileMenuOpen(!mobileMenuOpen)} aria-label="Toggle menu">
-              {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-            </button>
           </div>
-        </div>
-        <div className={`lg:hidden absolute top-full left-0 w-full bg-[#024E69] shadow-lg mobile-menu ${mobileMenuOpen ? "open" : ""}`}>
-          <nav className="flex flex-col p-4 space-y-4">
-            <button onClick={() => scrollToSection("home")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline text-left">HOME</button>
-            <button onClick={() => scrollToSection("produtos")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline text-left">PRODUTOS</button>
-            <button onClick={() => scrollToSection("sobre")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline text-left">SOBRE NÓS</button>
-            <button onClick={() => scrollToSection("contato")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline text-left">CONTATO</button>
-          </nav>
         </div>
       </header>
 
@@ -122,11 +107,11 @@ export default function HomePage() {
         </div>
         <div className="container mx-auto px-4 py-16 sm:py-24 lg:py-32 relative z-10 min-h-[500px] sm:min-h-[600px] lg:min-h-[780px] flex items-center">
           <div className="max-w-2xl w-full">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">SUA VIAGEM MAIS FÁCIL</h1>
+            <h1 className="text-6xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 sm:mb-6 leading-tight">SUA VIAGEM MAIS FÁCIL</h1>
             <p className="text-lg sm:text-xl lg:text-2xl mb-6 sm:mb-8 lg:mb-10">Economize na passagem, e curta seu sonho!</p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
-              <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">Comprar passagem</Link>
-              <Link href="/milhas" className="text-white hover:text-blue-200 transition-colors duration-300 font-medium self-center text-sm sm:text-base hover-underline text-center sm:text-left">Comprar milhas</Link>
+              <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="border-2 hover:border-[#179FCF] hover:bg-[#179FCF] hover:text-white px-6 py-3 rounded-3xl bg-white text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base min-w-74">Comprar passagem</Link>
+              <Link href="/milhas" className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base min-w-74">Comprar milhas</Link>
             </div>
           </div>
         </div>
@@ -139,13 +124,16 @@ export default function HomePage() {
             {siteConfig === undefined && <div className="h-[230px] w-full bg-gray-200 animate-pulse rounded-2xl"></div>}
             {siteConfig?.banner1Url && (
               <>
-                <Image
-                  src={siteConfig.banner1Url}
-                  alt="Banner promocional"
-                  width={690}
-                  height={230}
-                  className="hidden sm:block rounded-2xl object-cover w-full"
-                />
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
+                  <Image
+                    src={siteConfig.banner1Url}
+                    alt="Banner promocional"
+                    width={690}
+                    height={230}
+                    className="hidden sm:block rounded-2xl object-cover w-full"
+                  />
+                </Link>
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                 <Image
                   src={siteConfig.banner1Url} 
                   alt="Banner promocional mobile"
@@ -153,6 +141,7 @@ export default function HomePage() {
                   height={400}
                   className="sm:hidden rounded-2xl object-cover w-full max-w-sm mx-auto"
                 />
+                </Link>
               </>
             )}
           </div>
@@ -262,6 +251,7 @@ export default function HomePage() {
             {siteConfig === undefined && <div className="h-[230px] w-full bg-gray-200 animate-pulse rounded-2xl"></div>}
             {siteConfig?.banner2Url && (
               <>
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                 <Image
                   src={siteConfig.banner2Url}
                   alt="Banner promocional"
@@ -269,6 +259,8 @@ export default function HomePage() {
                   height={230}
                   className="hidden sm:block rounded-2xl object-cover w-full"
                 />
+                </Link>
+                <Link href={`https://wa.me/${links?.telOne}?text=Olá! Queria saber mais sobre as promoções!`} className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base">
                 <Image
                   src={siteConfig.banner2Url}
                   alt="Banner promocional mobile"
@@ -276,6 +268,7 @@ export default function HomePage() {
                   height={400}
                   className="sm:hidden rounded-2xl object-cover w-full max-w-sm mx-auto"
                 />
+                </Link>
               </>
             )}
           </div>
