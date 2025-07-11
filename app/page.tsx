@@ -235,7 +235,7 @@ export default function HomePage() {
             </div>
             <div className="w-full lg:w-1/2 order-1 lg:order-2 text-center lg:text-left">
               <h2 className="text-2xl sm:text-3xl lg:text-[42px] font-bold text-[#179FCF] leading-tight mb-4 lg:mb-5">Destinos populares</h2>
-              <p className="text-black text-sm sm:text-base lg:text-[18px] mb-4 lg:mb-3 leading-relaxed">Passagem <span className="font-bold">ida e volta</span> por <span className="font-bold">R$2.350</span> para <span className="font-bold">Toronto, Canadá</span>. Mais de 30 viajantes foram a este destino só esse mês! Confira nossos preços promocionais e embarque você também nessa viagem!</p>
+              <p className="text-black text-sm sm:text-base lg:text-[18px] mb-4 lg:mb-3 leading-relaxed">Passagem <span className="font-bold">ida e volta</span> por <span className="font-bold">preços incríveis</span> para <span className="font-bold">destinos dos sonhos</span>. Mais de 30 destinos são possíveis com promoções Easy Viagens! Confira nossos preços promocionais e embarque você também nessa viagem!</p>
               <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero saber mais sobre as promoções de vocês.`} className="text-[#179FCF] hover:text-[#1489b8] inline-flex items-center gap-2 font-semibold text-sm sm:text-base lg:text-[18px] hover-underline flex-link justify-center lg:justify-start">
                 Reserve agora! <Image src="/images/vetorseta.png" alt="Arrow" width={12} height={12} />
               </Link>
