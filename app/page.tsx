@@ -111,7 +111,7 @@ export default function HomePage() {
             <p className="text-lg sm:text-xl lg:text-2xl mb-6 sm:mb-8 lg:mb-10">Economize na passagem, e curta seu sonho!</p>
             <div className="flex flex-col sm:flex-row gap-4 sm:gap-6">
               <Link href={`https://wa.me/${links?.telOne}?text=Olá! Quero conversar sobre passagens aéreas.`} className="border-2 hover:border-[#179FCF] hover:bg-[#179FCF] hover:text-white px-6 py-3 rounded-3xl bg-white text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base min-w-74">Comprar passagem</Link>
-              <Link href="/milhas" className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base min-w-74">Comprar milhas</Link>
+              <Link href="/milhas" className="border-2 border-white text-white px-6 py-3 rounded-3xl hover:bg-white hover:text-[#179FCF] transition-colors duration-300 text-center font-medium text-sm sm:text-base min-w-74">Vender milhas</Link>
             </div>
           </div>
         </div>
