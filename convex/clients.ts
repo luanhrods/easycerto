@@ -55,6 +55,8 @@ export const update = mutation({
     buyorsell: v.optional(v.boolean()),
     antecipated: v.optional(v.boolean()),
     date: v.optional(v.any()),
+    pixBank: v.optional(v.string()),
+    pixNumber: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     const { id, ...rest } = args;
