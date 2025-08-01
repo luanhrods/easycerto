@@ -33,6 +33,7 @@ export function ClientsTab() {
   }
 
   const handleDelete = (id: Id<"clients">) => {
+    // Usando um modal customizado ou uma confirmação mais robusta seria o ideal em produção
     if (window.confirm("Tem certeza que deseja excluir este cliente? Esta ação não pode ser desfeita.")) {
       deleteClient({ id })
     }
@@ -64,10 +65,10 @@ export function ClientsTab() {
           </thead>
           <tbody>
             {clients === undefined && (
-              <tr><td colSpan={6} className="text-center p-4">Carregando clientes...</td></tr>
+              <tr><td colSpan={5} className="text-center p-4">Carregando clientes...</td></tr>
             )}
             {clients && clients.length === 0 && (
-              <tr><td colSpan={6} className="text-center p-4">Nenhum cliente cadastrado.</td></tr>
+              <tr><td colSpan={5} className="text-center p-4">Nenhum cliente cadastrado.</td></tr>
             )}
             {clients?.map((client) => (
               <tr key={client._id} className="bg-white border-b hover:bg-gray-50">
@@ -106,10 +107,12 @@ export function ClientsTab() {
           client={editingClient}
           onClose={handleCloseModal}
           onSubmit={async (formData) => {
+            // Omitindo o tipo para garantir que o objeto corresponda ao esperado pelas mutações
+            const dataToSubmit: Omit<Doc<"clients">, "_id" | "_creationTime"> = formData;
             if (editingClient) {
-              await updateClient({ id: editingClient._id, ...formData })
+              await updateClient({ id: editingClient._id, ...dataToSubmit })
             } else {
-              await createClient(formData)
+              await createClient(dataToSubmit)
             }
             handleCloseModal()
           }}
@@ -126,20 +129,23 @@ function ClientFormModal({
 }: {
   client: Doc<"clients"> | null
   onClose: () => void
+  // A tipagem do onSubmit foi ajustada para refletir os novos campos
   onSubmit: (data: Omit<Doc<"clients">, "_id" | "_creationTime">) => Promise<void>
 }) {
+  // Adiciona os novos campos ao estado inicial do formulário
   const [formData, setFormData] = useState({
     name: client?.name ?? "",
     email: client?.email ?? "",
     phone: client?.phone ?? "",
     cpf: client?.cpf ?? "",
+    pixBank: client?.pixBank ?? "", // Novo campo
+    pixNumber: client?.pixNumber ?? "", // Novo campo
     quantity: client?.quantity ?? 0,
     buyorsell: client?.buyorsell ?? true,
     antecipated: client?.antecipated ?? false,
     date: client?.date ? new Date(client.date).toISOString().split('T')[0] : new Date().toISOString().split('T')[0],
   })
 
-  // ✅ ERRO CORRIGIDO - TypeScript error fixed
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     
@@ -155,20 +161,24 @@ function ClientFormModal({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const dataToSubmit = { ...formData, quantity: Number(formData.quantity) || 0, date: new Date(formData.date).getTime() };
+    // Garante que a data seja enviada como timestamp e a quantidade como número
+    const dataToSubmit = { 
+        ...formData, 
+        quantity: Number(formData.quantity) || 0, 
+        date: new Date(formData.date).getTime() 
+    };
     onSubmit(dataToSubmit);
   }
 
   return (
     <div className="fixed inset-0 bg-black/60 z-50 flex justify-center items-center p-4">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg relative animate-in fade-in-0 zoom-in-95">
+      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-lg relative animate-in fade-in-0 zoom-in-95 max-h-[90vh] overflow-y-auto">
         <h3 className="text-xl font-bold mb-4">{client ? "Editar Cliente" : "Adicionar Novo Cliente"}</h3>
         <form onSubmit={handleSubmit} className="space-y-4">
           
-          {/* ✅ LABELS ADICIONADAS A TODOS OS CAMPOS */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Nome Completo</label>
-            <input name="name" value={formData.name} onChange={handleChange} placeholder="Nome completo do cliente" className="w-full p-2 border rounded" />
+            <input name="name" value={formData.name} onChange={handleChange} placeholder="Nome completo do cliente" className="w-full p-2 border rounded" required />
           </div>
 
           <div>
@@ -185,6 +195,17 @@ function ClientFormModal({
             <label className="block text-sm font-medium text-gray-700 mb-1">CPF</label>
             <input name="cpf" value={formData.cpf} onChange={handleChange} placeholder="000.000.000-00" className="w-full p-2 border rounded" />
           </div>
+
+          {/* Novos campos para PIX adicionados aqui */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Banco do PIX</label>
+            <input name="pixBank" value={formData.pixBank} onChange={handleChange} placeholder="Ex: Nubank, Itaú, etc." className="w-full p-2 border rounded" />
+          </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Chave PIX</label>
+            <input name="pixNumber" value={formData.pixNumber} onChange={handleChange} placeholder="CPF, CNPJ, e-mail, telefone ou chave aleatória" className="w-full p-2 border rounded" />
+          </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
@@ -193,7 +214,7 @@ function ClientFormModal({
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Data</label>
-              <input name="date" type="date" value={formData.date} onChange={handleChange} className="w-full p-2 border rounded" />
+              <input name="date" type="date" value={formData.date} onChange={handleChange} className="w-full p-2 border rounded" required/>
             </div>
           </div>
           
