@@ -22,6 +22,8 @@ export default defineSchema({
     buyorsell: v.optional(v.boolean()),
     antecipated: v.optional(v.boolean()),
     date: v.optional(v.any()),
+    pixBank: v.optional(v.string()),
+    pixNumber: v.optional(v.string()),
   }),
   landingLinks: defineTable({
     fb: v.optional(v.string()),
