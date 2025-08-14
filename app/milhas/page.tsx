@@ -82,11 +82,23 @@ export default function MilhasPage() {
     return options;
   }, [selectedCompany]);
   
-  const estimatedValue = useMemo(() => {
+  // ✅ ALTERAÇÃO: Lógica de cálculo de valores foi dividida para maior clareza.
+  const baseValue = useMemo(() => {
     if (!selectedCompany || !selectedMiles) return 0;
     const price = selectedCompany.priceSell;
     return (selectedMiles / 1000) * (price ?? 0);
   }, [selectedCompany, selectedMiles]);
+
+  const anticipationBonus = useMemo(() => {
+    if (deliveryType === "antecipado") {
+      return baseValue * 0.15; // Adiciona 15% ao valor base
+    }
+    return 0;
+  }, [baseValue, deliveryType]);
+
+  const totalValue = useMemo(() => {
+    return baseValue + anticipationBonus;
+  }, [baseValue, anticipationBonus]);
 
   const whatsAppMessage = useMemo(() => {
     if (!lastSubmission) return "";
@@ -300,6 +312,7 @@ export default function MilhasPage() {
                     </div>
                   </div>
                   
+                  {/* ✅ ALTERAÇÃO: Adicionado aviso sobre o bônus de 15% */}
                   <div 
                     onClick={() => setDeliveryType("antecipado")} 
                     className={`p-4 sm:p-6 border-2 rounded-lg cursor-pointer transition-colors ${deliveryType === "antecipado" ? "border-[#024E69] bg-blue-50" : "border-gray-300 hover:border-[#024E69]"}`}
@@ -308,6 +321,7 @@ export default function MilhasPage() {
                       <div>
                         <h3 className="text-lg sm:text-xl font-semibold text-gray-800">Antecipado</h3>
                         <p className="text-gray-600 mt-2 text-sm sm:text-base">Receba em até 24 horas</p>
+                        <p className="text-green-600 font-medium mt-1 text-sm sm:text-base">Receba 15% a mais no valor total!</p>
                       </div>
                       <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-full border-2 ${deliveryType === "antecipado" ? "border-[#024E69] bg-[#024E69]" : "border-gray-400"}`}>
                         {deliveryType === "antecipado" && <Check size={16} className="text-white m-0.5" />}
@@ -336,6 +350,7 @@ export default function MilhasPage() {
           )}
 
           {/* PASSO 3: Confirmação das Informações */}
+          {/* ✅ ALTERAÇÃO: Bloco de confirmação atualizado para mostrar o bônus */}
           {step === 3 && (
             <div className="max-w-2xl mx-auto">
               <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
@@ -358,15 +373,25 @@ export default function MilhasPage() {
                       <span className="font-semibold text-gray-700 text-sm sm:text-base">Tipo de Entrega:</span>
                       <span className="text-gray-900 capitalize text-sm sm:text-base">{deliveryType}</span>
                     </div>
-                    <div className="flex justify-between items-center border-t pt-3 sm:pt-4 mt-3 sm:mt-4">
-                      <span className="font-bold text-gray-700 text-sm sm:text-base">Valor Estimado:</span>
-                      <span className="font-bold text-[#024E69] text-base sm:text-lg">R$ {estimatedValue.toFixed(2)}</span>
-                    </div>
-                    {deliveryType === "antecipado" && (
-                      <div className="bg-blue-50 border border-blue-200 rounded p-3 mt-4 text-blue-800 text-xs sm:text-sm">
-                        Taxas adicionais podem ser aplicadas para recebimento antecipado.
+                    
+                    <div className="border-t pt-3 sm:pt-4 mt-3 sm:mt-4 space-y-3">
+                      <div className="flex justify-between items-center">
+                        <span className="font-semibold text-gray-700 text-sm sm:text-base">Valor das Milhas:</span>
+                        <span className="text-gray-900 text-sm sm:text-base">R$ {baseValue.toFixed(2)}</span>
                       </div>
-                    )}
+                      
+                      {deliveryType === "antecipado" && (
+                        <div className="flex justify-between items-center">
+                          <span className="font-semibold text-green-600 text-sm sm:text-base">Bônus Antecipado (+15%):</span>
+                          <span className="font-semibold text-green-600 text-sm sm:text-base">+ R$ {anticipationBonus.toFixed(2)}</span>
+                        </div>
+                      )}
+
+                      <div className="flex justify-between items-center border-t pt-3 mt-3">
+                        <span className="font-bold text-gray-700 text-base sm:text-lg">Valor Total a Receber:</span>
+                        <span className="font-bold text-[#024E69] text-xl sm:text-2xl">R$ {totalValue.toFixed(2)}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 
