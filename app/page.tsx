@@ -79,12 +79,25 @@ export default function HomePage() {
         .hover-underline.flex-link:hover::after { width: calc(100% - 1rem); }
         .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
         .mobile-menu.open { transform: translateX(0); }
+        {/* ✅ NOVO ESTILO PARA DEIXAR O LOGO BRANCO */}
+        .logo-white { filter: invert(1) brightness(2); }
       `}</style>
 
-      {/* Header (permanece intacto) */}
+      {/* Header */}
       <header className="bg-[#024E69] text-white px-4 sm:px-6 py-4 sm:py-5 shadow-lg relative">
         <div className="container mx-auto flex items-center justify-between">
-          <div className="text-xl sm:text-2xl font-bold tracking-wide">EASY VIAGENS</div>
+          
+          {/* ✅ ALTERAÇÃO: Troca do texto pelo componente de imagem do logo dentro de um botão */}
+          <button onClick={() => scrollToSection("home")} aria-label="Voltar ao início">
+            <Image
+              src="/easylogo.png"
+              alt="EasyViagens Turismo Logo"
+              width={135}
+              height={90}
+              className="h-12 w-auto logo-white"
+            />
+          </button>
+          
           <nav className="hidden lg:flex space-x-12">
             <button onClick={() => scrollToSection("home")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline cursor-pointer">HOME</button>
             <button onClick={() => scrollToSection("produtos")} className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline cursor-pointer">PRODUTOS</button>
