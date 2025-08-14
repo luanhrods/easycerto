@@ -82,7 +82,6 @@ export default function MilhasPage() {
     return options;
   }, [selectedCompany]);
   
-  // ✅ ALTERAÇÃO: Lógica de cálculo revertida para ADICIONAR o valor.
   const baseValue = useMemo(() => {
     if (!selectedCompany || !selectedMiles) return 0;
     const price = selectedCompany.priceSell;
@@ -91,13 +90,13 @@ export default function MilhasPage() {
 
   const anticipationAddition = useMemo(() => {
     if (deliveryType === "antecipado") {
-      return baseValue * 0.15; // O valor adicional é 15% do base.
+      return baseValue * 0.15;
     }
     return 0;
   }, [baseValue, deliveryType]);
 
   const totalValue = useMemo(() => {
-    return baseValue + anticipationAddition; // O valor total é o base MAIS o adicional.
+    return baseValue + anticipationAddition;
   }, [baseValue, anticipationAddition]);
 
   const whatsAppMessage = useMemo(() => {
@@ -183,12 +182,25 @@ export default function MilhasPage() {
         .hover-underline:hover::after { width: 100%; }
         .mobile-menu { transform: translateX(-100%); transition: transform 0.3s ease-in-out; }
         .mobile-menu.open { transform: translateX(0); }
+        {/* ✅ NOVO ESTILO PARA DEIXAR O LOGO BRANCO */}
+        .logo-white { filter: invert(1) brightness(2); }
       `}</style>
 
       {/* Header */}
       <header className="bg-[#024E69] text-white px-4 sm:px-6 py-4 sm:py-5 shadow-lg relative">
         <div className="container mx-auto flex items-center justify-between">
-          <Link href="/" className="text-xl sm:text-2xl font-bold tracking-wide hover:text-blue-200 transition-colors">EASY VIAGENS</Link>
+          
+          {/* ✅ ALTERAÇÃO: Troca do texto pelo componente de imagem do logo */}
+          <Link href="/" className="block">
+            <NextImage
+              src="/easylogo.png"
+              alt="EasyViagens Turismo Logo"
+              width={135}
+              height={90}
+              className="h-12 w-auto logo-white"
+            />
+          </Link>
+
           <nav className="hidden lg:flex space-x-12">
             <Link href="/" className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline">HOME</Link>
             <Link href="/#produtos" className="text-lg font-medium hover:text-blue-200 transition-colors duration-300 py-2 hover-underline">PRODUTOS</Link>
@@ -312,7 +324,6 @@ export default function MilhasPage() {
                     </div>
                   </div>
                   
-                  {/* ✅ ALTERAÇÃO: Texto revisado para explicar a adição pelo serviço de urgência. */}
                   <div 
                     onClick={() => setDeliveryType("antecipado")} 
                     className={`p-4 sm:p-6 border-2 rounded-lg cursor-pointer transition-colors ${deliveryType === "antecipado" ? "border-[#024E69] bg-blue-50" : "border-gray-300 hover:border-[#024E69]"}`}
@@ -350,7 +361,6 @@ export default function MilhasPage() {
           )}
 
           {/* PASSO 3: Confirmação das Informações */}
-          {/* ✅ ALTERAÇÃO: Bloco de confirmação revisado para refletir o valor adicional. */}
           {step === 3 && (
             <div className="max-w-2xl mx-auto">
               <div className="bg-white rounded-2xl shadow-lg p-6 sm:p-8">
