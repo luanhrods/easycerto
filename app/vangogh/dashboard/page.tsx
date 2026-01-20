@@ -1,9 +1,17 @@
 "use client"
 
-import { useState, useEffect } from "react";
+import { api } from "@/convex/_generated/api";
+import { useQuery } from "convex/react";
+import { BannersTab } from "./_components/BannersTab";
+import { ClientsTab } from "./_components/ClientsTab";
+import { ContactTab } from "./_components/ContactTab";
+import { SocialTab } from "./_components/SocialTab";
+// ✅ IMPORTANDO O NOVO COMPONENTE DE COMPANHIAS AÉREAS
+import { AirlinesTab } from "./_components/AirlinesTab";
+
 import {
   ArrowLeft,
-  Image as ImageIcon,
+  ImageIcon,
   LogOut,
   Palette,
   Phone,
@@ -14,12 +22,27 @@ import {
   X,
   AlertTriangle
 } from "lucide-react";
+import { Montserrat } from "next/font/google";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+})
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState("clients")
   const [showWarning, setShowWarning] = useState(false)
   const [timeRemaining, setTimeRemaining] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 })
   const [isExpired, setIsExpired] = useState(false)
+  // ✅ REMOVIDO: Toda a gestão de estado local para 'airlines' e 'settings' foi removida.
+  const router = useRouter()
+
+  const clients = useQuery(api.clients.list)
+  const airlines = useQuery(api.company.list)
 
   // Data limite: 20 de Março de 2026
   const EXPIRATION_DATE = new Date('2026-03-20T23:59:59')
@@ -57,16 +80,14 @@ export default function AdminDashboard() {
   }, [])
 
   const handleLogout = () => {
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem("adminLoggedIn")
-      window.location.href = "/vangogh"
-    }
+    localStorage.removeItem("adminLoggedIn")
+    router.push("/vangogh")
   }
 
   // Se expirou, mostrar tela de bloqueio
   if (isExpired) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-red-900 to-red-700 flex items-center justify-center p-4">
+      <div className={`min-h-screen bg-gradient-to-br from-red-900 to-red-700 flex items-center justify-center ${montserrat.className}`}>
         <div className="bg-white rounded-2xl shadow-2xl p-12 max-w-2xl text-center">
           <div className="mb-6 flex justify-center">
             <div className="bg-red-100 p-6 rounded-full">
@@ -91,7 +112,7 @@ export default function AdminDashboard() {
             </p>
           </div>
           <button
-            onClick={() => window.location.href = "/"}
+            onClick={() => router.push("/")}
             className="bg-blue-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
           >
             Voltar para Home
@@ -100,13 +121,16 @@ export default function AdminDashboard() {
       </div>
     )
   }
+ 
+  // ✅ REMOVIDO: Todas as funções handle... que gerenciavam o estado local foram removidas
+  // pois a lógica agora está encapsulada nos seus respectivos componentes de aba.
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className={`min-h-screen bg-gray-50 ${montserrat.className}`}>
       {/* Pop-up de Aviso */}
       {showWarning && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full overflow-hidden animate-in fade-in zoom-in duration-300">
             <div className="bg-gradient-to-r from-amber-500 to-orange-600 p-6 relative">
               <button
                 onClick={() => setShowWarning(false)}
@@ -202,25 +226,25 @@ export default function AdminDashboard() {
         </div>
       )}
 
-      <header className="bg-gradient-to-r from-blue-900 to-blue-800 text-white shadow-lg">
+      <header className="bg-gradient-to-r from-[#1e3a8a] to-[#1e40af] text-white shadow-lg">
         <div className="px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-6">
               <Palette className="w-8 h-8 text-yellow-300" />
               <h1 className="text-2xl font-bold">van Gogh - Easy Viagens</h1>
-              <a href="/" className="text-blue-100 hover:text-white transition-colors text-sm flex items-center gap-1 font-medium">
+              <Link href="/" className="text-blue-100 hover:text-white transition-colors text-sm flex items-center gap-1 font-medium">
                 <ArrowLeft size={16} />
                 Home
-              </a>
+              </Link>
             </div>
             <div className="flex items-center gap-4">
               <div className="text-sm text-blue-100">
                 Sistema van Gogh by{" "}
-                <a href="https://projetomidia.com" target="_blank" rel="noopener noreferrer" className="text-yellow-300 hover:text-yellow-200 transition-colors font-medium underline">
+                <Link href="https://projetomidia.com" target="_blank" rel="noopener noreferrer" className="text-yellow-300 hover:text-yellow-200 transition-colors font-medium underline">
                   Projeto Mídia
-                </a>
+                </Link>
               </div>
-              <button onClick={() => window.location.reload()} className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:bg-white/10 rounded-lg transition-colors">
+              <button onClick={() => {}} className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:bg-white/10 rounded-lg transition-colors">
                 <RefreshCw size={20} />
                 Atualizar
               </button>
@@ -235,25 +259,28 @@ export default function AdminDashboard() {
 
       <div className="flex">
         <aside className="w-64 bg-white shadow-sm min-h-screen border-r relative overflow-hidden">
-          <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 to-blue-800/70"></div>
+          <div className="absolute inset-0 opacity-20">
+            <Image src="/images/vangogh.jpg" alt="Van Gogh Starry Night" fill className="object-cover" />
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#1e3a8a]/80 to-[#1e40af]/70"></div>
           <nav className="p-4 relative z-10">
             <ul className="space-y-2">
               <li>
                 <button
                   onClick={() => setActiveTab("clients")}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-medium ${
-                    activeTab === "clients" ? "bg-white/90 text-blue-900 shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
+                    activeTab === "clients" ? "bg-white/90 text-[#1e3a8a] shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
                   }`}
                 >
                   <Users size={20} />
-                  Clientes (0)
+                  Clientes ({clients?.length ?? 0})
                 </button>
               </li>
               <li>
                 <button
                   onClick={() => setActiveTab("banners")}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-medium ${
-                    activeTab === "banners" ? "bg-white/90 text-blue-900 shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
+                    activeTab === "banners" ? "bg-white/90 text-[#1e3a8a] shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
                   }`}
                 >
                   <ImageIcon size={20} />
@@ -264,7 +291,7 @@ export default function AdminDashboard() {
                 <button
                   onClick={() => setActiveTab("social")}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-medium ${
-                    activeTab === "social" ? "bg-white/90 text-blue-900 shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
+                    activeTab === "social" ? "bg-white/90 text-[#1e3a8a] shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
                   }`}
                 >
                   <Share2 size={20} />
@@ -275,22 +302,23 @@ export default function AdminDashboard() {
                 <button
                   onClick={() => setActiveTab("contact")}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-medium ${
-                    activeTab === "contact" ? "bg-white/90 text-blue-900 shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
+                    activeTab === "contact" ? "bg-white/90 text-[#1e3a8a] shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
                   }`}
                 >
                   <Phone size={20} />
                   Contato
                 </button>
               </li>
+              {/* ✅ REMOVIDO: Botão da Calculadora foi excluído do menu */}
               <li>
                 <button
                   onClick={() => setActiveTab("airlines")}
                   className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors font-medium ${
-                    activeTab === "airlines" ? "bg-white/90 text-blue-900 shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
+                    activeTab === "airlines" ? "bg-white/90 text-[#1e3a8a] shadow-lg" : "text-white hover:bg-white/20 backdrop-blur-sm"
                   }`}
                 >
                   <Plane size={20} />
-                  Companhias (0)
+                  Companhias ({airlines?.length ?? 0})
                 </button>
               </li>
             </ul>
@@ -298,18 +326,15 @@ export default function AdminDashboard() {
         </aside>
 
         <main className="flex-1 p-6">
-          <div className="bg-white rounded-lg shadow p-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-4">
-              {activeTab === "clients" && "Gerenciar Clientes"}
-              {activeTab === "banners" && "Gerenciar Banners"}
-              {activeTab === "social" && "Redes Sociais"}
-              {activeTab === "contact" && "Informações de Contato"}
-              {activeTab === "airlines" && "Companhias Aéreas"}
-            </h2>
-            <p className="text-gray-600">
-              Conteúdo da aba {activeTab} será carregado aqui.
-            </p>
-          </div>
+          {activeTab === "clients" && <ClientsTab />}
+          {activeTab === "banners" && <BannersTab />}
+          {activeTab === "social" && <SocialTab />}
+          {activeTab === "contact" && <ContactTab />}
+          
+          {/* ✅ REMOVIDO: A aba da Calculadora foi excluída do conteúdo principal */}
+
+          {/* ✅ SEÇÃO DE COMPANHIAS SUBSTITUÍDA PELO NOVO COMPONENTE DINÂMICO */}
+          {activeTab === "airlines" && <AirlinesTab />}
         </main>
       </div>
     </div>
