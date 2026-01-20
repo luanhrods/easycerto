@@ -48,12 +48,8 @@ export default function AdminDashboard() {
   const EXPIRATION_DATE = new Date('2026-03-20T23:59:59')
 
   useEffect(() => {
-    // Verificar se já viu o aviso nesta sessão
-    const warningShown = sessionStorage.getItem('warningShown')
-    if (!warningShown) {
-      setShowWarning(true)
-      sessionStorage.setItem('warningShown', 'true')
-    }
+    // Mostrar aviso toda vez que entrar na dashboard
+    setShowWarning(true)
 
     // Calcular tempo restante
     const calculateTimeRemaining = () => {
