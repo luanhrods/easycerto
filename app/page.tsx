@@ -320,8 +320,8 @@ export default function HomePage() {
           <div className="border-t border-white/20 mt-8 pt-6 text-center">
             <p className="text-xs sm:text-sm opacity-80">
               Copyright@2025 Easy Viagens. Made with ❤️ by{" "}
-              <Link href="https://enchante.digital" target="_blank" rel="noopener noreferrer" className="hover:text-blue-200 transition-colors underline">
-                enchante.digital
+              <Link href="https://projetomidia.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-200 transition-colors underline">
+                projetomidia.com
               </Link>.
             </p>
           </div>
