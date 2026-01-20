@@ -64,8 +64,8 @@ export default function AdminDashboard() {
             <div className="flex items-center gap-4">
               <div className="text-sm text-blue-100">
                 Sistema van Gogh by{" "}
-                <Link href="https://enchante.digital" target="_blank" rel="noopener noreferrer" className="text-yellow-300 hover:text-yellow-200 transition-colors font-medium underline">
-                  enchantè
+                <Link href="https://projetomidia.com" target="_blank" rel="noopener noreferrer" className="text-yellow-300 hover:text-yellow-200 transition-colors font-medium underline">
+                  Projeto Mídia
                 </Link>
               </div>
               <button onClick={() => {}} className="flex items-center gap-2 px-4 py-2 text-blue-100 hover:bg-white/10 rounded-lg transition-colors">
