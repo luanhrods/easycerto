@@ -124,12 +124,12 @@ export default function AdminLoginPage() {
           <div className="mt-4 text-xs text-gray-400">
             Sistema van Gogh by{" "}
             <Link
-              href="https://enchante.digital"
+              href="https://projetomidia.com"
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#1e3a8a] hover:text-[#1d4ed8] transition-colors font-medium"
             >
-              enchantè
+              projetomidia
             </Link>
           </div>
         </div>
